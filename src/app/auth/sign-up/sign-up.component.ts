@@ -11,6 +11,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SignUpForm } from './models/sign-up-form.model';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -55,13 +56,19 @@ export class SignUpComponent implements OnInit {
     "zachodniopomorskie"
     ]
 
+    constructor(private router: Router) { }
+
     ngOnInit(): void {
       this.maxDate.setFullYear(this.maxDate.getFullYear() - 16);
       this.signUpForm.controls.dateOfBorn.setValue(this.maxDate);
     }
     onSubmitSignUp(): any {
       console.log(this.signUpForm);
-  }
+    }
+
+    onClickLogIn(): void {
+      this.router.navigate(['login']);
+    }
 }
 
 

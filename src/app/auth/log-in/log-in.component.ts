@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-log-in',
@@ -22,8 +23,14 @@ export class LogInComponent {
   login = "Zaloguj się";
   signUp = "Zarejestruj się"
 
+  constructor(private router: Router) { }
+
   onSubmit(form: NgForm) {
     console.log(form);
+  }
+
+  onClickSignUp() {
+    this.router.navigate(['signup']);
   }
 
 }
