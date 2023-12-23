@@ -1,0 +1,40 @@
+<div class="login-form">
+
+<form class="w-100" #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <mat-form-field>
+        <input 
+            matInput 
+            type="email"
+            required
+            ngModel
+            email
+            name="email" 
+            placeholder="Adres e-mail">
+        <mat-error>Podaj prawidłowy adres email</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <input 
+            matInput
+            required
+            ngModel
+            name="password" 
+            type="password" 
+            placeholder="Hasło">
+        <mat-error>Hasło nie może być puste</mat-error>
+    </mat-form-field>
+    <button
+            [disabled]="!form.valid"
+            class="w-100" 
+            type="submit" 
+            mat-raised-button 
+            color="primary">
+            {{login}}
+    </button>   
+</form>
+<h4>Nie masz konta?</h4>
+<button    
+    mat-raised-button 
+    color="primary">
+    {{signUp}}
+</button>
+</div>
