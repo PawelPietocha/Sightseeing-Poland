@@ -1,7 +1,8 @@
+<div class="header">
 <div class="login-form">
 
 <form class="w-100" #form="ngForm" (ngSubmit)="onSubmit(form)">
-    <mat-form-field>
+    <mat-form-field class="moveFromLeft">
         <input 
             matInput 
             type="email"
@@ -12,7 +13,7 @@
             placeholder="Adres e-mail">
         <mat-error>Podaj prawidłowy adres email</mat-error>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field class="moveFromLeft">
         <input 
             matInput
             required
@@ -22,20 +23,24 @@
             placeholder="Hasło">
         <mat-error>Hasło nie może być puste</mat-error>
     </mat-form-field>
-    <button
+    <button 
             [disabled]="!form.valid"
-            class="w-100" 
+            class="w-100 btn-moving"
+            style="border-radius: 100px; transition: all 0.5s" 
             type="submit" 
             mat-raised-button 
             color="primary">
             {{login}}
     </button>   
 </form>
-<h4>Nie masz konta?</h4>
+<h4 class="moveFromRight">Nie masz konta?</h4>
 <button
+    class="moveFromRight btn-moving"
+    style="border-radius: 100px; transition: all 0.5s"
     (click)="onClickSignUp()"    
     mat-raised-button 
     color="primary">
     {{signUp}}
 </button>
+</div>
 </div>

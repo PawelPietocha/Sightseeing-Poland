@@ -1,0 +1,48 @@
+.buttons {
+    display: flex;
+    gap: 30px;
+    flex-direction: row;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.header {
+    background-image: linear-gradient(
+        to right bottom,
+        rgba(126, 213, 111, 0.8),
+        rgba(40, 180, 131, 0.8)
+    ),
+    url(../../../assets/turbacz-background.jpg);
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    clip-path: polygon(0 0, 100% 0, 100% 60%, 0% 100%);
+}
+
+.header-text-container {
+    position: absolute;
+    top:50px;
+    text-align: center;
+    width: 100%;
+}
+
+.header-text-main {
+    color: white;
+    font-size: 60px;
+    font-weight: 400;
+    letter-spacing: 35px;
+    width: 100%;
+    text-transform: uppercase;
+}
+
+.header-text-second {
+    color:white;
+    font-size: 20px;
+    font-weight: 200;
+    letter-spacing: 15px;
+    width: 100%;
+    text-transform: uppercase;
+}
+
