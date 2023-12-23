@@ -1,1 +1,83 @@
-<p>sign-up works!</p>
+<div class="signup-form" style="margin-top: 0.5rem">
+<form class="w-100" [formGroup]="signUpForm" (ngSubmit)="onSubmitSignUp()">
+    <mat-form-field>
+        <input 
+            formControlName="email" 
+            matInput 
+            type="email" 
+            placeholder="Adres e-mail">
+            <mat-error *ngIf="signUpForm.controls.email.hasError('email')">
+            Wpisz poprawny adres e-mail</mat-error>
+            <mat-error *ngIf="signUpForm.controls.email.hasError('required')">
+            adres e-mail jest wymagany</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <input 
+            formControlName="password" 
+            matInput 
+            type="password" 
+            placeholder="Hasło">
+            <mat-error *ngIf="signUpForm.controls.password.hasError('required')">
+            Hasło jest wymagane</mat-error>
+            <mat-error *ngIf="signUpForm.controls.password.hasError('minlength')">
+            Hasło musi składać się z conajmniej 8 znaków</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <input 
+            formControlName="displayName" 
+            matInput
+            placeholder="Nazwa użytkownika" 
+            type="text">
+            <mat-hint align="end">{{signUpForm.controls.displayName.value?.length}} / 20</mat-hint>
+            <mat-error *ngIf="signUpForm.controls.displayName.hasError('required')">
+            Nazwa wyświetlana jest wymagana</mat-error>
+            <mat-error *ngIf="signUpForm.controls.displayName.hasError('maxlength')">
+            Nazwa wyświetlana może mieć maksymalnie 30 znaków</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <input
+            formControlName="dateOfBorn" 
+            matInput
+            readonly
+            placeholder="Data urodzenia"
+            [max]="maxDate" 
+            [matDatepicker]="picker">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-radio-group formControlName="gender" aria-label="Select an option">
+        <mat-radio-button value="Mężczyzna">Mężczyzna</mat-radio-button>
+        <mat-radio-button value="Kobieta">Kobieta</mat-radio-button>
+      </mat-radio-group>
+    <mat-form-field>
+        <mat-label>Wybierz województwo w którym mieszkasz</mat-label>
+  <mat-select formControlName="voivodeship">
+      <mat-option *ngFor="let voivodeship of voivodeships" [value]="voivodeship">
+        {{voivodeship}}</mat-option>
+  </mat-select>
+  <mat-error *ngIf="signUpForm.controls.voivodeship.hasError('required')">
+    Województwo jest wymagane</mat-error>
+      </mat-form-field>
+        <mat-checkbox 
+            formControlName="acceptTerms"
+            color="primary"
+            style="text-align: center; width: 100%">
+            Zaakceptuj warunki
+        </mat-checkbox>
+        <button
+            [disabled]="!signUpForm.valid"
+            class="w-100" 
+            type="submit" 
+            mat-raised-button 
+            color="primary">
+            {{signUp}}
+        </button>
+</form>
+<h4>Masz już konto?</h4>
+<button    
+    mat-raised-button 
+    color="primary">
+    {{login}}
+</button>
+</div>
