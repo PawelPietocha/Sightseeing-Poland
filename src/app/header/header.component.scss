@@ -1,0 +1,42 @@
+.header-container {
+    height: 10vh;
+    width: 100%;
+    background-color: rgba(126, 213, 111, 0.8);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.header-button {
+    background-color: transparent;
+    border:none;
+    width: 20vw;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.header-button:hover {
+    cursor: pointer;
+}
+
+.active {
+    font-weight: bold;
+    background-color: darken($color: rgba(126, 213, 111, 0.8), $amount: 0);
+    border: 1mm ridge rgba(211, 220, 50, .6);
+}
+
+.logout-button {
+    background-color: transparent;
+    border: none;
+    width: 10vw;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.header-sub-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}

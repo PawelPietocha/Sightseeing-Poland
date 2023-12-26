@@ -1,0 +1,27 @@
+<div class="header-container">
+    
+        <div class="header-sub-container">
+            <button
+                [ngClass]="{'active': activeTab === 1}"
+                (click)="onClickHome()" 
+                class="header-button">
+                Home
+            </button>
+            <button
+            [ngClass]="{'active': activeTab === 2}"
+                (click)="onClickMoutain()" 
+                class="header-button">
+                Korona Gór
+            </button>
+            <button
+            [ngClass]="{'active': activeTab === 3}"
+                (click)="onClickParks()" 
+                class="header-button">
+                Parki Narodowe
+            </button>
+        </div>
+        <button class="logout-button">
+            Wyloguj się
+        </button>
+    
+</div>
