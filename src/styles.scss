@@ -6,6 +6,17 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
     }
 
+    .horizontal-divider {
+        hr.solid {
+            border-top: 3px solid #bbb;
+          }
+    }
+
+    .vertical-divider {
+        border-left: 3px solid #000;
+        height: 100%;
+    }
+
     .btn-moving {
         background-color: white;
         color: gray;

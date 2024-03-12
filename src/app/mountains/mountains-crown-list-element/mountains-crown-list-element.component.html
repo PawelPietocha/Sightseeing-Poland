@@ -1,1 +1,25 @@
-<p>mountains-crown-list-element works!</p>
+<div class="main">
+    <div 
+         class="mountains-name">{{mountain.name}}</div>
+    <img src="{{mountain.imagePath}}" alt="tekst" class="mountains-img">
+    <div class="informations">
+        <div class="mountains-height">Wysokość: {{mountain.height}}</div>
+        <div class="mountain-range">Masyw: {{mountain.mountainsRange}}</div>
+        <div class="mountain-voivodeship">Województwo: {{mountain.voivodeship}}</div>
+        
+        <button *ngIf="mountain.visited" class="details" (click)="onClickDetails()">
+            <mat-icon
+                aria-hidden="false"
+                aria-label="Example home icon"
+                matTooltip="Pokaż szczegóły"
+                fontIcon="collections"></mat-icon>
+            </button>
+    </div>
+</div>
+
+<div *ngIf="!mountain.visited" class="mountains-non-visited">
+</div>
+
+<div *ngIf="!mountain.visited" class="mountains-non-visited-button">
+    <button class="btn-moving" (click)="markAsVisited()">Oznacz jako zdobytą</button>
+</div>

@@ -1,1 +1,97 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.mountains-name {
+    flex:2;
+    background-color: rgba(126, 213, 111, 0.8);
+    text-align: center;
+    color: white;
+    font-weight: 500;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.mountains-img {
+    flex:5;
+    background-size: cover;
+    max-height: 50%;
+}
+
+.mountains-non-visited {
+    position: absolute;
+    left: 5%;
+    top: 5%;
+    width: 90%;
+    height: 90%;
+    background-color: #cccccc;
+    opacity: 0.5;
+    z-index:10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mountains-non-visited-button {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    z-index: 11;
+}
+
+.informations {
+    flex:1;
+    position: relative;
+}
+
+.mountains-height {
+    flex:1;
+    text-align: center;
+    background-color: rgba(126, 213, 111, 0.8);
+    color: white;
+    letter-spacing: 1px;
+}
+
+.mountain-range {
+    flex:1;
+    text-align: center;
+    background-color: rgba(126, 213, 111, 0.8);
+    color: white;
+    letter-spacing: 1px;
+}
+
+.mountain-voivodeship {
+    flex:1;
+    text-align: center;
+    background-color: rgba(126, 213, 111, 0.8);
+    color: white;
+    letter-spacing: 1px;
+}
+
+.visited {
+    color: lightblue;
+}
+
+.details {
+    position: absolute;
+    right:0px;
+    top:0px;
+    background-color: transparent;
+    border: none;
+}
+
+mat-Icon {
+    color: white;
+}
 

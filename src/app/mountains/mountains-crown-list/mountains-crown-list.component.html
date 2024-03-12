@@ -1,32 +1,8 @@
-<mat-grid-list cols="3" rowHeight="2:1">
-    <mat-grid-tile>1</mat-grid-tile>
-    <mat-grid-tile>2</mat-grid-tile>
-    <mat-grid-tile>3</mat-grid-tile>
-    <mat-grid-tile>4</mat-grid-tile>
-    <mat-grid-tile>5</mat-grid-tile>
-    <mat-grid-tile>6</mat-grid-tile>
-    <mat-grid-tile>7</mat-grid-tile>
-    <mat-grid-tile>8</mat-grid-tile>
-    <mat-grid-tile>9</mat-grid-tile>
-    <mat-grid-tile>10</mat-grid-tile>
-    <mat-grid-tile>11</mat-grid-tile>
-    <mat-grid-tile>12</mat-grid-tile>
-    <mat-grid-tile>13</mat-grid-tile>
-    <mat-grid-tile>14</mat-grid-tile>
-    <mat-grid-tile>15</mat-grid-tile>
-    <mat-grid-tile>16</mat-grid-tile>
-    <mat-grid-tile>17</mat-grid-tile>
-    <mat-grid-tile>18</mat-grid-tile>
-    <mat-grid-tile>19</mat-grid-tile>
-    <mat-grid-tile>20</mat-grid-tile>
-    <mat-grid-tile>21</mat-grid-tile>
-    <mat-grid-tile>22</mat-grid-tile>
-    <mat-grid-tile>23</mat-grid-tile>
-    <mat-grid-tile>24</mat-grid-tile>
-    <mat-grid-tile>25</mat-grid-tile>
-    <mat-grid-tile>26</mat-grid-tile>
-    <mat-grid-tile>27</mat-grid-tile>
-    <mat-grid-tile>28</mat-grid-tile>
+<mat-grid-list cols="3" rowHeight="4:3">
 
+  <mat-grid-tile *ngFor="let mountain of mountains">
+    <app-mountains-crown-list-element style="width: 90%; height: 90%;" [mountain]="mountain">
+    </app-mountains-crown-list-element>
+  </mat-grid-tile>
 
-  </mat-grid-list>
+</mat-grid-list>

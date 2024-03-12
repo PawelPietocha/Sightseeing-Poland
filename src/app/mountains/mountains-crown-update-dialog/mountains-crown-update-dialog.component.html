@@ -1,0 +1,71 @@
+<div class="dialog-content">
+    <div class="dialog-header">
+        <h3>{{title}}</h3>
+    </div>
+    <div class="dialog-form">
+        <form class="w-100" [formGroup]="form">
+            <mat-form-field>
+                <input formControlName="dateOfVisit" matInput readonly placeholder="Data zdobycia" [max]="maxDate"
+                    [matDatepicker]="picker">
+                <mat-hint>Data zdobycia szczytu (MM/DD/YYYY)</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <hr class="horizontal-divider">
+            <div class="grouped">
+                <mat-form-field matTooltip="Ilość godzin" [matTooltipPosition]="'above'">
+                    <input formControlName="tripTimeHours" matInput placeholder="Ilość godzin" type="number" max="99"
+                        min="0">
+
+                    <mat-hint>Czas wejścia na szczyt</mat-hint>
+                </mat-form-field>
+                <mat-form-field matTooltip="Ilość minut" [matTooltipPosition]="'above'">
+                    <input formControlName="tripTimeMinutes" matInput placeholder="ilość minut" type="number" max="59"
+                        min="0">
+                    <mat-hint>Czas wejścia na szczyt</mat-hint>
+                </mat-form-field>
+            </div>
+            <hr class="horizontal-divider">
+            <div class="grouped">
+                <mat-form-field matTooltip="Wpisz miejsce rozpoczęcia trasy" [matTooltipPosition]="'above'">
+                    <input formControlName="startPlace" matInput placeholder="Miejsce rozpoczęcia trasy" type="text">
+                    <mat-hint>Rozpoczęcie trasy</mat-hint>
+                </mat-form-field>
+                <mat-form-field matTooltip="Wpisz miejsce zakończenia trasy" [matTooltipPosition]="'above'">
+                    <input formControlName="endPlace" matInput placeholder="Miejsce zakończenia trasy" type="text">
+                    <mat-hint>Zakończenie trasy</mat-hint>
+                </mat-form-field>
+            </div>
+            <hr class="horizontal-divider">
+            <div class="grouped">
+                <mat-form-field>
+                    <input formControlName="tripLenghtInKm" matInput placeholder="Np 2.3" type="number">
+                    <mat-hint>Długość trasy w kilometrach</mat-hint>
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="elevationGainInMeters" matInput placeholder="np. 340" type="number">
+                    <mat-hint>Pokonane przewyższenie w metrach</mat-hint>
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
+    <hr class="horizontal-divider">
+    <div class="buttons">
+        <button *ngIf="mountain.visited" class="btn-moving" style="border-radius: 100px; transition: all 0.5s" (click)="onCofnijOznaczenie()"
+            mat-raised-button color="warn">
+            Cofnij oznaczenie
+        </button>
+        <button class="btn-moving" style="border-radius: 100px; transition: all 0.5s" (click)="onCancel()"
+            mat-raised-button color="warn">
+            Anuluj
+        </button>
+        <button class="btn-moving" style="border-radius: 100px;
+                background-color: rgba(126, 213, 111, 0.8);
+                color: white; 
+                transition: all 0.5s" (click)="onSubmit()" mat-raised-button>
+            Zapisz
+        </button>
+
+    </div>
+
+</div>

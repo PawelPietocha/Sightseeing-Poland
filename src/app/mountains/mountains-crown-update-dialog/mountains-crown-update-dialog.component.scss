@@ -1,0 +1,36 @@
+.dialog-content {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    position: relative;
+    left: 5%;
+}
+
+.dialog-header {
+    text-align: center;
+}
+
+.grouped {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap:10px;
+}
+
+mat-hint {
+    text-align: center;
+    width: 100%;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    margin-top: 15px;
+    gap: 15px;
+}
+
