@@ -1,1 +1,96 @@
-<p>home works!</p>
+<mat-tab-group>
+    <mat-tab label="Dane użytkownika">
+        <div class="home" *ngIf="dataLoaded">
+            <mat-form-field [floatLabel]="'always'">
+                <mat-label>Nazwa Użytkownika</mat-label>
+                <input 
+                    [disabled]="!updateUserDetailsMode" 
+                    [(ngModel)]="displayName" 
+                    matInput>
+            </mat-form-field>
+            <mat-form-field [floatLabel]="'always'">
+                <mat-label>Województwo</mat-label>
+          <mat-select 
+            [disabled]="!updateUserDetailsMode" 
+            [(value)]="genderId">
+              <mat-option 
+                [value]="0">
+                Mężczyzna</mat-option>
+              <mat-option 
+                [value]="1">
+                Kobieta</mat-option>
+          </mat-select>
+              </mat-form-field>
+            <mat-form-field [floatLabel]="'always'">
+                <mat-label>Województwo</mat-label>
+          <mat-select 
+            [disabled]="!updateUserDetailsMode" 
+            [(value)]="selectedVoivodeship.id">
+              <mat-option 
+                *ngFor="let voivodeship of voivodeships" 
+                [value]="voivodeship.id">
+                {{voivodeship.name}}
+              </mat-option>
+          </mat-select>
+              </mat-form-field>
+              <mat-form-field>
+                <input
+                    [disabled]="!updateUserDetailsMode"
+                    matInput
+                    readonly
+                    [(ngModel)]="dateOfBirth"
+                    [max]="maxDate" 
+                    [matDatepicker]="picker">
+                <mat-datepicker-toggle 
+                    matIconSuffix 
+                    [for]="picker">
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <button 
+                (click)="moveToUpdateUserDetailsMode()"
+                class="btn-moving"
+                style="border-radius: 100px; transition: all 0.5s" 
+                mat-raised-button 
+                color="primary">
+                {{editUserDetailsButtonLabel}}
+            </button>
+        </div>
+    </mat-tab>
+    <mat-tab label="Dane logowania">
+        <div class="home">
+        <mat-form-field [floatLabel]="'always'">
+            <mat-label>Adres email</mat-label>
+            <input 
+                [(ngModel)]="email" 
+                [disabled]="true" 
+                matInput>
+        </mat-form-field>
+        <mat-form-field  [floatLabel]="'always'">
+            <mat-label>Hasło</mat-label>
+            <input 
+                [disabled]="!updateUserLoginDetailsMode" 
+                [(ngModel)]="password" 
+                [type]="hidePassword ? 'password' : 'text'" 
+                matInput
+                placeholder="********">
+            <button 
+                [disabled]="!updateUserLoginDetailsMode" 
+                mat-icon-button 
+                matSuffix 
+                (click)="hidePassword = !hidePassword" 
+                [attr.aria-label]="'Hide password'" 
+                [attr.aria-pressed]="hidePassword">
+                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+        <button 
+            (click)="moveToUpdateUserLoginDetailsMode()"
+            class="btn-moving"
+            style="border-radius: 100px; transition: all 0.5s" 
+            mat-raised-button color="primary">
+            {{editUserLoginDetailsButtonLabel}}
+        </button>
+    </div>
+    </mat-tab>
+</mat-tab-group>

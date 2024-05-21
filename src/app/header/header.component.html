@@ -1,27 +1,30 @@
-<div class="header-container">
-    
+<div *ngIf="isUserLogged">
+    <div class="header-container">
         <div class="header-sub-container">
-            <button
-                [ngClass]="{'active': activeTab === 1}"
+            <button 
+                [ngClass]="{'active': activeTab === 1}" 
                 (click)="onClickHome()" 
                 class="header-button">
-                Home
+                {{displayUser}}
             </button>
-            <button
-            [ngClass]="{'active': activeTab === 2}"
+            <button 
+                [ngClass]="{'active': activeTab === 2}" 
                 (click)="onClickMoutain()" 
                 class="header-button">
                 Korona Gór
             </button>
-            <button
-            [ngClass]="{'active': activeTab === 3}"
+            <button 
+                [ngClass]="{'active': activeTab === 3}" 
                 (click)="onClickParks()" 
                 class="header-button">
                 Parki Narodowe
             </button>
         </div>
-        <button class="logout-button">
+        <button 
+            class="logout-button" 
+            (click)="onClickLogout()" 
+            class="header-button">
             Wyloguj się
         </button>
-    
+    </div>
 </div>

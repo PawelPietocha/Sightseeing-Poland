@@ -2,12 +2,13 @@ import { Observable, map, of } from "rxjs";
 import { Mountain } from "../models/mountain-model";
 import { Host, Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { MountainVisited } from "../models/mountain-visited-model";
 
 @Injectable({
   providedIn: 'root',
 })
 export class MountainsApiService {
-  private baseApiURL = 'https://localhost:5001/api/'
+  private baseApiURL = 'https://localhost:5001/api/';
   constructor(private http: HttpClient) {
 
   }
@@ -37,6 +38,20 @@ export class MountainsApiService {
   }
   updateMountain(mountain: Mountain): Observable<any> {
     return this.http.post(this.baseApiURL + 'MountainsCrown/update', mountain)
+  }
+
+  markMountainAsVisited(mountainVisited: MountainVisited): Observable<any> {
+    return this.http.post(this.baseApiURL + 'MountainsCrown/markAsVisited', mountainVisited)
+  }
+
+  getVisitedMountainCrown(userId: string): Observable<MountainVisited[]> {
+    return this.http
+    .get<MountainVisited[]>(this.baseApiURL + 'MountainsCrown/getVisitedMountainsCrown/' + userId)
+    .pipe(
+      map(response => {
+        return response
+      })
+    )
   }
 
 }

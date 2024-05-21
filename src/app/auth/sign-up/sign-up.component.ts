@@ -8,10 +8,17 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CommonModule } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { SignUpForm } from './models/sign-up-form.model';
+import { SignUpForm } from '../models/sign-up-form.model';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { Router } from '@angular/router';
+import { VoivodeshipApiService } from '../../voivodeships/services/voivodeship-api.service';
+import { take } from 'rxjs';
+import { Voivodeship } from '../../voivodeships/models/voivodeship-model';
+import { AuthApiService } from '../auth-api.service';
+import { SignUp } from '../models/sign-up-model';
+import { MatIconModule } from '@angular/material/icon';
+import { User } from '../models/user.model';
 
 @Component({
   selector: 'app-sign-up',
@@ -27,48 +34,69 @@ import { Router } from '@angular/router';
     FormsModule,
     CommonModule,
     MatCheckboxModule,
-    MatSelectModule, 
+    MatSelectModule,
+    MatIconModule,
     MatRadioModule],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss'
 })
 export class SignUpComponent implements OnInit {
   signUpForm = new FormGroup<SignUpForm>(new SignUpForm());
-  signUp = "Zarejestruj się";
-  login = "Zaloguj się";
-  maxDate = new Date();
-  voivodeships = [
-    "dolnośląskie",
-    "kujawsko-pomorskie",
-    "lubelskie",
-    "lubuskie",
-    "łódzkie",
-    "małopolskie",
-    "mazowieckie",
-    "opolskie",
-    "podkarpackie",
-    "podlaskie",
-    "pomorskie",
-    "śląskie",
-    "świętokrzyskie",
-    "warmińsko-mazurskie",
-    "wielkopolskie",
-    "zachodniopomorskie"
-    ]
+  signUpLabel = "Zarejestruj się";
+  loginLabel = "Zaloguj się";
+  maxDateOfBirth = new Date();
+  voivodeships: Voivodeship[] = [];
+  hidePassword = true;
 
-    constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private voivodeshipApiService: VoivodeshipApiService,
+    private authApiService: AuthApiService) { }
 
-    ngOnInit(): void {
-      this.maxDate.setFullYear(this.maxDate.getFullYear() - 16);
-      this.signUpForm.controls.dateOfBorn.setValue(this.maxDate);
-    }
-    onSubmitSignUp(): any {
-      console.log(this.signUpForm);
-    }
+  ngOnInit(): void {
+    this.initData();
 
-    onClickLogIn(): void {
-      this.router.navigate(['login']);
+  }
+  onSubmit(): void {
+    if (!this.signUpForm.valid) {
+      return;
     }
+    let userToRegister = this.convertSignUpFormToSignUpModel();
+    this.authApiService.register(userToRegister).subscribe(user => {
+      if (user) {
+        this.onSuccesfullyRegister(user);
+      }
+    })
+  }
+
+  onClickLogIn(): void {
+    this.router.navigate(['login']);
+  }
+
+  private initData(): void {
+    this.maxDateOfBirth.setFullYear(this.maxDateOfBirth.getFullYear() - 16);
+    this.signUpForm.controls.dateOfBirth.setValue(this.maxDateOfBirth);
+    this.voivodeshipApiService.getVoivodeships().pipe(take(1)).subscribe(voivodeships => {
+      this.voivodeships = voivodeships;
+    })
+  }
+
+  private convertSignUpFormToSignUpModel(): SignUp {
+    return {
+      email: this.signUpForm.controls.email.getRawValue(),
+      password: this.signUpForm.controls.password.getRawValue(),
+      displayName: this.signUpForm.controls.displayName.getRawValue(),
+      dateOfBirth: this.signUpForm.controls.dateOfBirth.getRawValue(),
+      gender: this.signUpForm.controls.gender.getRawValue(),
+      voivodeshipId: this.signUpForm.controls.voivodeship.getRawValue(),
+      acceptTerms: this.signUpForm.controls.acceptTerms.getRawValue(),
+    }
+  }
+
+  private onSuccesfullyRegister(user: User): void {
+    this.authApiService.currentUserSubject$.next(user);
+        this.router.navigate(['home']);
+  }
 }
 
 

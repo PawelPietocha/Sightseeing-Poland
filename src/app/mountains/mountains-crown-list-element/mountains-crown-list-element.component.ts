@@ -29,7 +29,9 @@ export class MountainsCrownListElementComponent {
   }
 
   markAsVisited(): void {
-    this.mountainsDialogService.openMarkAsVisitedDialog(this.mountain);
+    this.mountainsDialogService.openMarkAsVisitedDialog(this.mountain).subscribe(result => {
+      this.mountain.visited = result;
+    })
   }
 
   onClickDetails() {

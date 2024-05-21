@@ -6,8 +6,24 @@
     left: 50%;
     transform: translate(-50%, -50%);   
     top: 50%;
-
 }
+
+.incorrect-login {
+    color: #f44336;
+    text-align: center;
+}
+
+.opacity-0-2 {
+    opacity: 0.2;
+}
+
+.spinner {
+    position: absolute;
+    z-index: 1000;
+    left: 50%;
+    transform: translate(-50%, -50%);   
+    top: 50%;
+  }
 
 .w-100 {
     width: 100%;

@@ -1,46 +1,71 @@
 <div class="header">
-<div class="login-form">
-
-<form class="w-100" #form="ngForm" (ngSubmit)="onSubmit(form)">
-    <mat-form-field class="moveFromLeft">
-        <input 
-            matInput 
-            type="email"
-            required
-            ngModel
-            email
-            name="email" 
-            placeholder="Adres e-mail">
-        <mat-error>Podaj prawidłowy adres email</mat-error>
-    </mat-form-field>
-    <mat-form-field class="moveFromLeft">
-        <input 
-            matInput
-            required
-            ngModel
-            name="password" 
-            type="password" 
-            placeholder="Hasło">
-        <mat-error>Hasło nie może być puste</mat-error>
-    </mat-form-field>
-    <button 
-            [disabled]="!form.valid"
-            class="w-100 btn-moving"
+    <div class="login-form">
+        <div 
+            *ngIf="wasIncorrectLoginTry"
+            class="incorrect-login">
+            Błędne dane logowania
+        </div>
+        <mat-spinner 
+            class="spinner"
+            *ngIf="isSpinnerVisible">
+        </mat-spinner>
+        <form 
+            class="w-100"
+            #form="ngForm"
+            (ngSubmit)="onSubmit(form)"
+            [ngClass]="{'opacity-0-2': isSpinnerVisible}">
+            <mat-form-field class="moveFromLeft">
+                <input 
+                    matInput 
+                    type="email" 
+                    required 
+                    ngModel 
+                    email 
+                    name="email" 
+                    placeholder="Adres e-mail">
+                <mat-error>Podaj prawidłowy adres email</mat-error>
+            </mat-form-field>
+            <mat-form-field class="moveFromLeft">
+                <input 
+                    matInput 
+                    [type]="hidePassword ? 'password' : 'text'" 
+                    required 
+                    ngModel 
+                    name="password"
+                    placeholder="Hasło">
+                <mat-error>Hasło nie może być puste</mat-error>
+                <button 
+                    mat-icon-button 
+                    matSuffix 
+                    (click)="hidePassword = !hidePassword"
+                    [attr.aria-label]="'Hide password'" 
+                    [attr.aria-pressed]="hidePassword">
+                    <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+            <button 
+                [disabled]="!form.valid" 
+                class="w-100 btn-moving" 
+                style="border-radius: 100px; transition: all 0.5s"
+                type="submit" 
+                mat-raised-button 
+                color="primary">
+                {{loginLabel}}
+            </button>
+        </form>
+        <h4 
+            [ngClass]="{'opacity-0-2': isSpinnerVisible}"
+            class="moveFromRight">
+            Nie masz konta?
+        </h4>
+        <button 
+            [ngClass]="{'opacity-0-2': isSpinnerVisible}"
+            class="moveFromRight btn-moving"
             style="border-radius: 100px; transition: all 0.5s" 
-            type="submit" 
-            mat-raised-button 
+            (click)="onClickSignUp()" 
+            mat-raised-button
             color="primary">
-            {{login}}
-    </button>   
-</form>
-<h4 class="moveFromRight">Nie masz konta?</h4>
-<button
-    class="moveFromRight btn-moving"
-    style="border-radius: 100px; transition: all 0.5s"
-    (click)="onClickSignUp()"    
-    mat-raised-button 
-    color="primary">
-    {{signUp}}
-</button>
-</div>
+            {{signUpLabel}}
+        </button>
+    </div>
 </div>

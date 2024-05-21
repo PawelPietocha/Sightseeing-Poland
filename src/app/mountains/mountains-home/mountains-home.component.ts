@@ -12,5 +12,4 @@ import { MountainsCrownListComponent } from '../mountains-crown-list/mountains-c
   styleUrl: './mountains-home.component.scss'
 })
 export class MountainsHomeComponent {
-
 }

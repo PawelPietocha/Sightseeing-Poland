@@ -1,90 +1,132 @@
 <div class="header">
-<div class="signup-form" style="margin-top: 0.5rem">
-<form class="w-100" [formGroup]="signUpForm" (ngSubmit)="onSubmitSignUp()">
-    <mat-form-field class="moveFromLeft">
-        <input 
-            formControlName="email" 
-            matInput 
-            type="email" 
-            placeholder="Adres e-mail">
-            <mat-error *ngIf="signUpForm.controls.email.hasError('email')">
-            Wpisz poprawny adres e-mail</mat-error>
-            <mat-error *ngIf="signUpForm.controls.email.hasError('required')">
-            adres e-mail jest wymagany</mat-error>
-    </mat-form-field>
-    <mat-form-field class="moveFromLeft">
-        <input 
-            formControlName="password" 
-            matInput 
-            type="password" 
-            placeholder="Hasło">
-            <mat-error *ngIf="signUpForm.controls.password.hasError('required')">
-            Hasło jest wymagane</mat-error>
-            <mat-error *ngIf="signUpForm.controls.password.hasError('minlength')">
-            Hasło musi składać się z conajmniej 8 znaków</mat-error>
-    </mat-form-field>
-    <mat-form-field class="moveFromLeft">
-        <input 
-            formControlName="displayName" 
-            matInput
-            placeholder="Nazwa użytkownika" 
-            type="text">
-            <mat-hint align="end">{{signUpForm.controls.displayName.value?.length}} / 20</mat-hint>
-            <mat-error *ngIf="signUpForm.controls.displayName.hasError('required')">
-            Nazwa wyświetlana jest wymagana</mat-error>
-            <mat-error *ngIf="signUpForm.controls.displayName.hasError('maxlength')">
-            Nazwa wyświetlana może mieć maksymalnie 30 znaków</mat-error>
-    </mat-form-field>
-    <mat-form-field class="moveFromLeft">
-        <input
-            formControlName="dateOfBorn" 
-            matInput
-            readonly
-            placeholder="Data urodzenia"
-            [max]="maxDate" 
-            [matDatepicker]="picker">
-        <mat-hint>Data urodzenia (MM/DD/YYYY)</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-    <mat-radio-group class="moveFromLeft" formControlName="gender" aria-label="Select an option">
-        <mat-radio-button value="Mężczyzna">Mężczyzna</mat-radio-button>
-        <mat-radio-button value="Kobieta">Kobieta</mat-radio-button>
-      </mat-radio-group>
-    <mat-form-field class="moveFromLeft">
-        <mat-label>Wybierz województwo w którym mieszkasz</mat-label>
-  <mat-select formControlName="voivodeship">
-      <mat-option *ngFor="let voivodeship of voivodeships" [value]="voivodeship">
-        {{voivodeship}}</mat-option>
-  </mat-select>
-  <mat-error *ngIf="signUpForm.controls.voivodeship.hasError('required')">
-    Województwo jest wymagane</mat-error>
-      </mat-form-field>
-        <mat-checkbox 
-            formControlName="acceptTerms"
-            class="moveFromLeft"
-            color="primary"
-            style="text-align: center; width: 100%">
-            Zaakceptuj warunki
-        </mat-checkbox>
-        <button
-            [disabled]="!signUpForm.valid"
-            class="w-100 moveFromRight btn-moving"
-            style="border-radius: 100px; transition: all 0.5s"  
-            type="submit" 
+    <div 
+        class="signup-form" 
+        style="margin-top: 0.5rem">
+        <form 
+            class="w-100" 
+            [formGroup]="signUpForm"
+            (ngSubmit)="onSubmit()">
+            <mat-form-field class="moveFromLeft">
+                <input 
+                    formControlName="email"
+                    matInput type="email"
+                    placeholder="Adres e-mail">
+                <mat-error *ngIf="signUpForm.controls.email.hasError('email')">
+                    Wpisz poprawny adres e-mail
+                </mat-error>
+                <mat-error *ngIf="signUpForm.controls.email.hasError('required')">
+                    adres e-mail jest wymagany
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="moveFromLeft">
+                <input 
+                    formControlName="password"
+                    matInput [type]="hidePassword ? 'password' : 'text'" 
+                    placeholder="Hasło">
+                <mat-error *ngIf="signUpForm.controls.password.hasError('required')">
+                    Hasło jest wymagane
+                </mat-error>
+                <mat-error *ngIf="signUpForm.controls.password.hasError('minlength')">
+                    Hasło musi składać się z conajmniej 8 znaków
+                </mat-error>
+                <mat-error *ngIf="signUpForm.controls.password.hasError('pattern')">
+                    Wymagane: wielką litera, cyfra, znak specjalny
+                </mat-error>
+                <button 
+                    mat-icon-button 
+                    matSuffix (click)="hidePassword = !hidePassword" 
+                    [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hidePassword">
+                    <mat-icon>
+                        {{hidePassword ? 'visibility_off' : 'visibility'}}
+                    </mat-icon>
+                </button>
+            </mat-form-field>
+            <mat-form-field class="moveFromLeft">
+                <input 
+                    formControlName="displayName"
+                    matInput 
+                    placeholder="Nazwa użytkownika"
+                    type="text">
+                <mat-hint 
+                    align="end">
+                    {{signUpForm.controls.displayName.value?.length}} / 20
+                </mat-hint>
+                <mat-error *ngIf="signUpForm.controls.displayName.hasError('required')">
+                    Nazwa wyświetlana jest wymagana
+                </mat-error>
+                <mat-error *ngIf="signUpForm.controls.displayName.hasError('maxlength')">
+                    Nazwa wyświetlana może mieć maksymalnie 30 znaków
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="moveFromLeft">
+                <input 
+                    formControlName="dateOfBirth" 
+                    matInput 
+                    readonly 
+                    placeholder="Data urodzenia" 
+                    [max]="maxDateOfBirth"
+                    [matDatepicker]="picker">
+                <mat-hint>Data urodzenia (MM/DD/YYYY)</mat-hint>
+                <mat-datepicker-toggle 
+                    matIconSuffix 
+                    [for]="picker">
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-radio-group 
+                class="moveFromLeft" 
+                formControlName="gender" 
+                aria-label="Select an option">
+                <mat-radio-button 
+                    value="0">
+                    Mężczyzna
+                </mat-radio-button>
+                <mat-radio-button 
+                    value="1">
+                    Kobieta
+                </mat-radio-button>
+            </mat-radio-group>
+            <mat-form-field class="moveFromLeft">
+                <mat-label>Wybierz województwo w którym mieszkasz</mat-label>
+                <mat-select formControlName="voivodeship">
+                    <mat-option 
+                        *ngFor="let voivodeship of voivodeships" 
+                        [value]="voivodeship.id">
+                        {{voivodeship.name}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="signUpForm.controls.voivodeship.hasError('required')">
+                    Województwo jest wymagane
+                </mat-error>
+            </mat-form-field>
+            <mat-checkbox 
+                formControlName="acceptTerms" 
+                class="moveFromLeft" 
+                color="primary"
+                style="text-align: center; width: 100%">
+                Zaakceptuj warunki
+            </mat-checkbox>
+            <button 
+                [disabled]="!signUpForm.valid" 
+                class="w-100 moveFromRight btn-moving"
+                style="border-radius: 100px; transition: all 0.5s" 
+                type="submit" 
+                mat-raised-button color="primary">
+                {{signUpLabel}}
+            </button>
+        </form>
+        <h4 
+            class="moveFromRight">
+            Masz już konto?
+        </h4>
+        <button 
+            class="moveFromRight btn-moving" 
+            style="border-radius: 100px; transition: all 0.5s"
+            (click)="onClickLogIn()" 
             mat-raised-button 
             color="primary">
-            {{signUp}}
+            {{loginLabel}}
         </button>
-</form>
-<h4 class="moveFromRight">Masz już konto?</h4>
-<button
-    class="moveFromRight btn-moving"
-    style="border-radius: 100px; transition: all 0.5s" 
-    (click)="onClickLogIn()"    
-    mat-raised-button 
-    color="primary">
-    {{login}}
-</button>
-</div>
+    </div>
 </div>

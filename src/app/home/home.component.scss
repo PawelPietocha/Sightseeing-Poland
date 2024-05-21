@@ -1,0 +1,11 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 20px;
+    width: 300px;
+    left: 50%;
+    transform: translateX(-50%);
+    overflow-y: hidden;
+    overflow-x: hidden;
+}

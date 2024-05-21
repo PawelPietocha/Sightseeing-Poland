@@ -12,6 +12,7 @@ import { Mountain } from '../models/mountain-model';
 import { MountainsApiService } from '../services/mountains-api.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MountainVisited } from '../models/mountain-visited-model';
 
 @Component({
   selector: 'app-mountains-crown-update-dialog',
@@ -51,7 +52,7 @@ export class MountainsCrownUpdateDialogComponent implements OnInit{
   };
   
   onCancel() {
-  this.dialogRef.close();
+  this.dialogRef.close(false);
   }
 
   onCofnijOznaczenie() {
@@ -67,21 +68,25 @@ export class MountainsCrownUpdateDialogComponent implements OnInit{
       this.form.markAsDirty();
       return;
     }
-    this.mapFormToMountain();
-    this.mountainApiService.updateMountain(this.mountain).subscribe(x => {
-      this.dialogRef.close();
+    const mountainVisited = this.mapFormToVisitedMountain();
+    this.mountainApiService.markMountainAsVisited(mountainVisited).subscribe(x => {
+      this.dialogRef.close(true);
     })
   }
 
-  mapFormToMountain(): void {
-    this.mountain.visited = true;
-    this.mountain.dateOfVisit = this.form.controls.dateOfVisit.getRawValue()!;
-    this.mountain.tripTimeMinutes = this.form.controls.tripTimeMinutes.getRawValue()!;
-    this.mountain.tripTimeHours = this.form.controls.tripTimeHours.getRawValue()!;
-    this.mountain.startPlace = this.form.controls.startPlace.getRawValue()!;
-    this.mountain.endPlace = this.form.controls.endPlace.getRawValue()!;
-    this.mountain.tripLenghtInKm = this.form.controls.tripLenghtInKm.getRawValue()!;
-    this.mountain.elevationGainInMeters = this.form.controls.elevationGainInMeters.getRawValue()!;
+  mapFormToVisitedMountain(): MountainVisited {
+    let mountainVisited: MountainVisited = {
+      dateOfVisit: this.form.controls.dateOfVisit.getRawValue()!,     
+      tripTimeMinutes: this.form.controls.tripTimeMinutes.getRawValue()!,
+      tripTimeHours: this.form.controls.tripTimeHours.getRawValue()!,
+      startPlace: this.form.controls.startPlace.getRawValue()!,
+      endPlace: this.form.controls.endPlace.getRawValue()!,
+      tripLenghtInKm: this.form.controls.tripLenghtInKm.getRawValue()!,
+      elevationGainInMeters: this.form.controls.elevationGainInMeters.getRawValue()!,
+      mountainId: this.mountain.id,
+      userId: localStorage.getItem('userId')!
+    }
+    return mountainVisited;
   }
 
   getMountainDetails(): void {
