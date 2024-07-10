@@ -1,4 +1,5 @@
 export interface MountainVisited {
+    id?: number;
     dateOfVisit?: Date;
     tripTimeHours?: number;
     tripTimeMinutes?: number;

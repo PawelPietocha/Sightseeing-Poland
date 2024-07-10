@@ -1,55 +1,49 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthApiService } from '../auth/auth-api.service';
+import { DialogService } from '../utils/dialogs/dialog-service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
-
-  activeTab = 1;
-  displayUser: string | null;
+  displayUser: string;
   isUserLogged: boolean;
 
   constructor(
     private router: Router,
+    private dialogService: DialogService,
     private authApiService: AuthApiService) {
   }
   ngOnInit(): void {
-    if(localStorage.getItem('token')){
-      this.displayUser = localStorage.getItem('displayName');
+    if (localStorage.getItem('displayName')) {
+      this.displayUser = localStorage.getItem('displayName')!;
       this.isUserLogged = true;
     }
     this.authApiService.currentUserSubject$.subscribe(user => {
-      if(user) {
+      if (user) {
         this.displayUser = user.displayName;
         this.isUserLogged = true;
       }
     })
   }
 
-onClickParks(): void {
-  this.activeTab = 3;
-  this.router.navigate(['parks']);
-}
-onClickMoutain(): void {
-  this.activeTab = 2;
-  this.router.navigate(['mountains']);
-}
-onClickHome(): void {
-  this.activeTab = 1;
-  this.router.navigate(['home']);
-}
-onClickLogout(): void {
-  localStorage.clear();
-  this.isUserLogged = false;
-  this.router.navigate(['']);
-}
-
-
+  onClickLogout(): void {
+    this.dialogService.openConfirmDialog("Czy na pewno chcesz się wylogować?").pipe(take(1)).subscribe(confirmed => {
+      if (!confirmed) {
+        return;
+      }
+      else {
+        localStorage.clear();
+        this.isUserLogged = false;
+        this.router.navigate(['']);
+      }
+    })
+  }
 }

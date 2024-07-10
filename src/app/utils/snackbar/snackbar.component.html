@@ -1,0 +1,7 @@
+<div class="snackbar-container">
+    <mat-icon 
+        [ngClass]="data.isSuccess? 'success-icon': 'error-icon'" 
+        [fontIcon]="data.isSuccess? 'done': 'error'"></mat-icon>
+    <p>{{data.message}}</p>
+</div>
+

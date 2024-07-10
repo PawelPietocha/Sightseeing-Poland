@@ -1,0 +1,15 @@
+.snackbar-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+
+.success-icon {
+    color: rgba(126, 213, 111, 0.8);
+    margin: auto;
+}
+
+.error-icon {
+    color: red;
+    margin: auto;
+}

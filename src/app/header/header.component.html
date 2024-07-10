@@ -1,29 +1,17 @@
 <div *ngIf="isUserLogged">
     <div class="header-container">
         <div class="header-sub-container">
-            <button 
-                [ngClass]="{'active': activeTab === 1}" 
-                (click)="onClickHome()" 
-                class="header-button">
+            <button [routerLink]="['/home']" [routerLinkActive]="['active']" class="header-button">
                 {{displayUser}}
             </button>
-            <button 
-                [ngClass]="{'active': activeTab === 2}" 
-                (click)="onClickMoutain()" 
-                class="header-button">
+            <button [routerLink]="['/mountains']" [routerLinkActive]="['active']" class="header-button">
                 Korona Gór
             </button>
-            <button 
-                [ngClass]="{'active': activeTab === 3}" 
-                (click)="onClickParks()" 
-                class="header-button">
+            <button [routerLink]="['/parks']" [routerLinkActive]="['active']" class="header-button">
                 Parki Narodowe
             </button>
         </div>
-        <button 
-            class="logout-button" 
-            (click)="onClickLogout()" 
-            class="header-button">
+        <button class="logout-button" (click)="onClickLogout()" class="header-button">
             Wyloguj się
         </button>
     </div>

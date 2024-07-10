@@ -51,7 +51,7 @@
     </div>
     <hr class="horizontal-divider">
     <div class="buttons">
-        <button *ngIf="mountain.visited" class="btn-moving" style="border-radius: 100px; transition: all 0.5s" (click)="onCofnijOznaczenie()"
+        <button *ngIf="mountain.visited" class="btn-moving" style="border-radius: 100px; transition: all 0.5s" (click)="onUndoMark()"
             mat-raised-button color="warn">
             Cofnij oznaczenie
         </button>
@@ -59,11 +59,17 @@
             mat-raised-button color="warn">
             Anuluj
         </button>
-        <button class="btn-moving" style="border-radius: 100px;
+        <button *ngIf="isOnEditMode || !isMountainVisited" class="btn-moving" style="border-radius: 100px;
                 background-color: rgba(126, 213, 111, 0.8);
                 color: white; 
                 transition: all 0.5s" (click)="onSubmit()" mat-raised-button>
             Zapisz
+        </button>
+        <button *ngIf="!isOnEditMode && isMountainVisited" class="btn-moving" style="border-radius: 100px;
+                background-color: rgba(126, 213, 111, 0.8);
+                color: white; 
+                transition: all 0.5s" (click)="moveToEditMode()" mat-raised-button>
+            Edytuj
         </button>
 
     </div>

@@ -13,4 +13,5 @@ export interface Mountain {
     endPlace?: string;
     tripLenghtInKm?: number;
     elevationGainInMeters?: number;
+    visitedMountainId?: number;
 }

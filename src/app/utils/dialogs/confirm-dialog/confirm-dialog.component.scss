@@ -1,0 +1,23 @@
+.dialog-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 90%;
+    position: relative;
+    left: 5%;
+    height: 100%;
+    margin-bottom: 5%;
+    gap:20px;
+}
+
+.dialog-header {
+    text-align: center;
+}
+
+.dialog-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    margin-top: 15px;
+    gap: 15px;
+}

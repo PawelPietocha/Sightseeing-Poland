@@ -61,6 +61,7 @@ export class MountainsCrownListComponent {
         mountain.tripTimeHours = visitedMountain.tripTimeHours;
         mountain.tripTimeMinutes = visitedMountain.tripTimeMinutes;
         mountain.visited = true;
+        mountain.visitedMountainId = visitedMountain.id;
       }
     })
   }

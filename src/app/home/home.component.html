@@ -48,7 +48,7 @@
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
             <button 
-                (click)="moveToUpdateUserDetailsMode()"
+                (click)="switchUpdateDetailsMode()"
                 class="btn-moving"
                 style="border-radius: 100px; transition: all 0.5s" 
                 mat-raised-button 
@@ -85,7 +85,7 @@
             </button>
         </mat-form-field>
         <button 
-            (click)="moveToUpdateUserLoginDetailsMode()"
+            (click)="switchUpdatePasswordMode()"
             class="btn-moving"
             style="border-radius: 100px; transition: all 0.5s" 
             mat-raised-button color="primary">

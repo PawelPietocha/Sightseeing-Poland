@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { User } from '../models/user.model';
+import { SnackBarService } from '../../utils/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-log-in',
@@ -37,7 +38,8 @@ export class LogInComponent {
 
   constructor(
     private router: Router,
-    private authApiService: AuthApiService) { }
+    private authApiService: AuthApiService,
+    private snackbarService: SnackBarService) { }
 
   onSubmit(form: NgForm): void {
     if (!form.valid) {
@@ -58,12 +60,14 @@ export class LogInComponent {
   }
 
   private onSuccessfullyLogin(user: User): void {
+    this.snackbarService.openSnackBar("Zalogowano poprawnie");
     this.isSpinnerVisible = false;
     this.authApiService.currentUserSubject$.next(user);
     this.router.navigate(['home']);
   }
 
   private onUnSuccessfullyLogin(): void {
+    this.snackbarService.openSnackBar('Błędne dane logowania', false);
     this.wasIncorrectLoginTry = true;
     this.isSpinnerVisible = false;
   }

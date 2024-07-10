@@ -13,12 +13,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { Router } from '@angular/router';
 import { VoivodeshipApiService } from '../../voivodeships/services/voivodeship-api.service';
-import { take } from 'rxjs';
 import { Voivodeship } from '../../voivodeships/models/voivodeship-model';
 import { AuthApiService } from '../auth-api.service';
 import { SignUp } from '../models/sign-up-model';
 import { MatIconModule } from '@angular/material/icon';
 import { User } from '../models/user.model';
+import { SnackBarService } from '../../utils/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -51,7 +51,8 @@ export class SignUpComponent implements OnInit {
   constructor(
     private router: Router,
     private voivodeshipApiService: VoivodeshipApiService,
-    private authApiService: AuthApiService) { }
+    private authApiService: AuthApiService,
+    private snackbarService: SnackBarService) { }
 
   ngOnInit(): void {
     this.initData();
@@ -62,10 +63,13 @@ export class SignUpComponent implements OnInit {
       return;
     }
     let userToRegister = this.convertSignUpFormToSignUpModel();
-    this.authApiService.register(userToRegister).subscribe(user => {
-      if (user) {
-        this.onSuccesfullyRegister(user);
-      }
+    this.authApiService.register(userToRegister).subscribe({
+      next: (user: User) => {
+        if (user) {
+          this.onSuccesfullyRegister(user);
+        }
+      },
+      error: () => this.onUnsuccesfullyLogin()
     })
   }
 
@@ -76,27 +80,30 @@ export class SignUpComponent implements OnInit {
   private initData(): void {
     this.maxDateOfBirth.setFullYear(this.maxDateOfBirth.getFullYear() - 16);
     this.signUpForm.controls.dateOfBirth.setValue(this.maxDateOfBirth);
-    this.voivodeshipApiService.getVoivodeships().pipe(take(1)).subscribe(voivodeships => {
+    this.voivodeshipApiService.getVoivodeships().subscribe(voivodeships => {
       this.voivodeships = voivodeships;
     })
   }
 
   private convertSignUpFormToSignUpModel(): SignUp {
     return {
-      email: this.signUpForm.controls.email.getRawValue(),
-      password: this.signUpForm.controls.password.getRawValue(),
-      displayName: this.signUpForm.controls.displayName.getRawValue(),
-      dateOfBirth: this.signUpForm.controls.dateOfBirth.getRawValue(),
-      gender: this.signUpForm.controls.gender.getRawValue(),
-      voivodeshipId: this.signUpForm.controls.voivodeship.getRawValue(),
-      acceptTerms: this.signUpForm.controls.acceptTerms.getRawValue(),
+      email: this.signUpForm.controls.email.getRawValue()!,
+      password: this.signUpForm.controls.password.getRawValue()!,
+      displayName: this.signUpForm.controls.displayName.getRawValue()!,
+      dateOfBirth: this.signUpForm.controls.dateOfBirth.getRawValue()!,
+      gender: this.signUpForm.controls.gender.getRawValue()!,
+      voivodeshipId: this.signUpForm.controls.voivodeship.getRawValue()!,
+      acceptTerms: this.signUpForm.controls.acceptTerms.getRawValue()!,
     }
   }
 
   private onSuccesfullyRegister(user: User): void {
+    this.snackbarService.openSnackBar("Pomyślnie utworzono konto i zalogowano")
     this.authApiService.currentUserSubject$.next(user);
-        this.router.navigate(['home']);
+    this.router.navigate(['home']);
+  }
+
+  private onUnsuccesfullyLogin(): void {
+    this.snackbarService.openSnackBar("Nieznany błąd przy tworzeniu konta", false);
   }
 }
-
-

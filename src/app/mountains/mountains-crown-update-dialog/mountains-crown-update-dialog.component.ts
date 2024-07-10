@@ -13,6 +13,9 @@ import { MountainsApiService } from '../services/mountains-api.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MountainVisited } from '../models/mountain-visited-model';
+import { DialogService } from '../../utils/dialogs/dialog-service';
+import { mergeMap, of } from 'rxjs';
+import { SnackBarService } from '../../utils/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-mountains-crown-update-dialog',
@@ -41,25 +44,59 @@ export class MountainsCrownUpdateDialogComponent implements OnInit{
   form = new FormGroup<MountainCrownUpdateForm>(new MountainCrownUpdateForm());
   maxDate = new Date();
   title = 'Example dialog Title';
+  isMountainVisited: boolean;
+  isOnEditMode = false;
   constructor(
     public dialogRef: MatDialogRef<MountainsCrownUpdateDialogComponent>,
-    private mountainApiService: MountainsApiService
+    private mountainApiService: MountainsApiService,
+    private dialogService: DialogService,
+    private snackBarService: SnackBarService
     ){}
     
   ngOnInit(): void {
+    console.log(this.mountain);
   this.getMountainDetails();
-  console.log(this.mountain);
+  if(this.isMountainVisited) {
+    this.form.disable();
+  }
   };
   
   onCancel() {
   this.dialogRef.close(false);
   }
 
-  onCofnijOznaczenie() {
-    this.mountain.visited = false;
-    this.mountainApiService.updateMountain(this.mountain).subscribe(x => {
-      this.dialogRef.close();
+  onUndoMark() {
+    this.dialogService.openConfirmDialog("Czy na pewno cofnąć oznaczenie góry jako zdobytą?")
+    .pipe(mergeMap(
+      (result: boolean) => {
+        if(result) {
+          const mountainVisited = this.mapFormToVisitedMountain();
+          console.log(mountainVisited);
+          return this.mountainApiService.deleteMountainFromVisited(mountainVisited)
+        
+        }
+        else {
+          return of (null)
+        }
+      }
+    ))
+    .subscribe({
+      next: (result) => {
+        if(result) {
+          this.mountain.visited = false;
+          this.snackBarService.openSnackBar("Oznaczenie zostało cofnięte");
+          this.dialogRef.close(false);
+        }
+      },
+      error: () => {
+        this.snackBarService.openSnackBar("Błąd przy próbie cofnięcia oznaczenia góry jako zdobytej", false);
+      }
     })
+  }
+
+  moveToEditMode() {
+    this.isOnEditMode = true;
+    this.form.enable();
   }
 
   
@@ -69,13 +106,21 @@ export class MountainsCrownUpdateDialogComponent implements OnInit{
       return;
     }
     const mountainVisited = this.mapFormToVisitedMountain();
-    this.mountainApiService.markMountainAsVisited(mountainVisited).subscribe(x => {
-      this.dialogRef.close(true);
-    })
+    if(this.isMountainVisited) {
+      this.mountainApiService.updateMountain(mountainVisited).subscribe((mountain: Mountain) => {
+        this.dialogRef.close(mountain);
+      })
+    }
+    else {
+      this.mountainApiService.markMountainAsVisited(mountainVisited).subscribe((mountain: Mountain) => {
+        this.dialogRef.close(mountain);
+      })  
+    }
   }
 
   mapFormToVisitedMountain(): MountainVisited {
     let mountainVisited: MountainVisited = {
+      id: this.mountain.visitedMountainId,
       dateOfVisit: this.form.controls.dateOfVisit.getRawValue()!,     
       tripTimeMinutes: this.form.controls.tripTimeMinutes.getRawValue()!,
       tripTimeHours: this.form.controls.tripTimeHours.getRawValue()!,
@@ -100,6 +145,5 @@ export class MountainsCrownUpdateDialogComponent implements OnInit{
       this.form.controls.elevationGainInMeters.setValue(this.mountain.elevationGainInMeters!);
     }
   }
-
 }
 

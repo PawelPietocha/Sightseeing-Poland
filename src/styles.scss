@@ -1,84 +1,103 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { 
+html,
+body {
+    height: 100%;
+}
+
+.snackbar-alert {
+    color: red;
+}
+
+body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.horizontal-divider {
+    hr.solid {
+        border-top: 3px solid #bbb;
+    }
+}
+
+.vertical-divider {
+    border-left: 3px solid #000;
+    height: 100%;
+}
+
+.btn-moving {
+    background-color: white;
+    color: gray;
+    padding: 15px 40px;
+    display: inline-block;
+    border-radius: 100px;
+    transition: all 0.5s;
+    border: 1px solid black;
+    position: relative;
+}
+
+.btn-moving:hover {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn-moving:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.moveFromLeft {
+    animation-name: moveInLeft;
+    animation-duration: 3s;
+}
+
+.moveFromRight {
+    animation-name: moveInRight;
+    animation-duration: 3s;
+}
+
+@keyframes moveInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(100px);
     }
 
-    .horizontal-divider {
-        hr.solid {
-            border-top: 3px solid #bbb;
-          }
+    80% {
+        opacity: 0.8;
+        transform: translateX(-30px);
     }
 
-    .vertical-divider {
-        border-left: 3px solid #000;
-        height: 100%;
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes moveInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px);
     }
 
-    .btn-moving {
-        background-color: white;
-        color: gray;
-        padding: 15px 40px;
-        display: inline-block;
-        border-radius: 100px;
-        transition: all 0.5s;
-        border: 1px solid black;
-        position: relative;
-    }
-    
-    .btn-moving:hover {
-        transform: translateY(-3px) scale(1.1);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }
-    
-    .btn-moving:active {
-        transform: translateY(-1px);
-        box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    80% {
+        opacity: 0.8;
+        transform: translateX(30px);
     }
 
-    .moveFromLeft {
-        animation-name: moveInLeft;
-        animation-duration: 3s;
+    100% {
+        opacity: 1;
+        transform: translateX(0);
     }
-    
-    .moveFromRight {
-        animation-name: moveInRight;
-        animation-duration: 3s;
-    }
+}
 
-    @keyframes moveInRight {
-        0% {
-            opacity:0;
-            transform: translateX(100px);
-        }
-    
-        80% {
-            opacity:0.8;
-            transform: translateX(-30px);
-        }
-    
-        100% {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
+.soon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(50%, 50%);
+}
 
-    @keyframes moveInLeft {
-        0% {
-            opacity:0;
-            transform: translateX(-100px);
-        }
-    
-        80% {
-            opacity:0.8;
-            transform: translateX(30px);
-        }
-    
-        100% {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-
+.div-soon {
+    width: 100%;
+    height: 100%;
+}

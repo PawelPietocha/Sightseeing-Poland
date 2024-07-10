@@ -27,7 +27,7 @@ export class MountainsApiService {
     .get<{
        pageIndex: number,
        pageSize: number,
-       count: number, 
+       count: number,
        data:Mountain[] }>
        (this.baseApiURL +'MountainsCrown')
     .pipe(
@@ -36,12 +36,16 @@ export class MountainsApiService {
       })
     )
   }
-  updateMountain(mountain: Mountain): Observable<any> {
-    return this.http.post(this.baseApiURL + 'MountainsCrown/update', mountain)
+  updateMountain(mountainVisited: MountainVisited): Observable<any> {
+    return this.http.post(this.baseApiURL + 'MountainsCrown/update', mountainVisited)
   }
 
-  markMountainAsVisited(mountainVisited: MountainVisited): Observable<any> {
-    return this.http.post(this.baseApiURL + 'MountainsCrown/markAsVisited', mountainVisited)
+  deleteMountainFromVisited(mountainVisited: MountainVisited): Observable<any> {
+    return this.http.delete(this.baseApiURL + 'MountainsCrown/delete', {body: mountainVisited})
+  }
+
+  markMountainAsVisited(mountainVisited: MountainVisited): Observable<Mountain> {
+    return this.http.post<Mountain>(this.baseApiURL + 'MountainsCrown/markAsVisited', mountainVisited)
   }
 
   getVisitedMountainCrown(userId: string): Observable<MountainVisited[]> {

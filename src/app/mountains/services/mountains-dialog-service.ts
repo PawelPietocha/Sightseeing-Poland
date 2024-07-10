@@ -14,7 +14,7 @@ export class MountainDialogService {
         private injector: Injector,
     ) { }
 
-    openMarkAsVisitedDialog(mountain: Mountain): Observable<any> {
+    openMarkAsVisitedDialog(mountain: Mountain, isVisited = false): Observable<any> {
         const dialogRef = this.dialog.open(MountainsCrownUpdateDialogComponent, {
             maxHeight: '900px',
             maxWidth: '500px',
@@ -24,6 +24,7 @@ export class MountainDialogService {
 
         dialogRef.componentInstance.title = "Uzupełnij szczegóły zdobycia szczytu";
         dialogRef.componentInstance.mountain = mountain;
+        dialogRef.componentInstance.isMountainVisited = isVisited;
         return dialogRef.afterClosed()
     };
 }

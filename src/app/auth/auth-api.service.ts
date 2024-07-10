@@ -65,7 +65,6 @@ export class AuthApiService {
       .post<User>(this.baseApiURL + 'updateUserLoginDetails', updateLoginDetails)
       .pipe(
         map(user => {
-          localStorage.setItem('email', user.email);
           return user;
         })
       )

@@ -1,0 +1,27 @@
+<div class="dialog-content">
+    <div class="dialog-header">
+        <h3>{{title}}</h3>
+        <mat-divider></mat-divider>
+    </div>
+    <div class="dialog-question">{{question}}</div>
+    <div>
+        <mat-divider></mat-divider>
+        <div class="dialog-buttons">
+            <button 
+                class="btn-moving" 
+                style="border-radius: 100px; transition: all 0.5s"
+                mat-raised-button
+                (click)="onCancel()" 
+                color="warn">
+                {{cancelLabel}}
+            </button>
+            <button 
+                class="btn-moving" 
+                style="border-radius: 100px; background-color: rgba(126, 213, 111, 0.8); color: white; transition: all 0.5s"
+                (click)="onSubmit()" 
+                mat-raised-button>
+                {{confirmLabel}}
+            </button>
+        </div>
+    </div>
+</div>
